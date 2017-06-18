@@ -7,19 +7,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello Blog!</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <title>0x42 Blog</title>
+    <!-- link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>" -->
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
+    <div>
+      <header >
+        <nav>
+          <ul >
+            <li>Home</li>
+            <li><a href="/admin">Log In</a></li>
           </ul>
         </nav>
-        <span class="logo"></span>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

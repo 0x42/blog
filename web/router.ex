@@ -3,7 +3,7 @@ defmodule Blog.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
-    plug :fetch_session
+    plug :fetch_session    # <-
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
@@ -21,8 +21,14 @@ defmodule Blog.Router do
     end
 
     get "/", PageController, :index
-    get "/hello", HelloController, :index
-    get "/hello/:messanger", HelloController, :show
+  end
+
+  scope "/admin", Blog do
+    pipe_through :browser
+
+    get  "/",    AdminController, :index
+    get  "/new", AdminController, :new
+    post "/new", AdminController, :create
   end
 
   # Other scopes may use custom stacks.

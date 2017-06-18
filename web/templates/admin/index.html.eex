@@ -1,0 +1,8 @@
+<div>
+  <h2># Admin Page</h2>
+  <div>
+    <p><b>## Posts:</b></p>
+  </div>
+  <br>
+  <div><a href="/admin/new/">Create</a></div>
+</div>
