@@ -1,23 +1,26 @@
 defmodule Blog.AdminController do
   use Blog.Web, :controller
   import Plug.Conn
+  alias Blog.Post
+
   
   def index(conn, _params) do
     render conn, "index.html"
   end
 
   def new(conn, _params) do
-    csrf = Plug.Conn.get_session(conn, :csrf_token)
-    csrf2 = Map.get(conn.req_cookies, "_csrf_token")
-    IO.puts "> CSRF:"
-    IO.inspect csrf
-    IO.puts "> CSRF2:"
-    IO.inspect csrf2
-    render conn, "new.html"
+    render conn, "new.html", error: nil
   end
   
-  def create(conn, _params) do
-    
-    render conn, "index.html"
+  def create(conn, params = %{"admin_post" => new_post}) do
+    changeset = Post.changeset %Post{}, new_post
+
+    case Repo.insert changeset do
+      {:ok, _schema} -> redirect conn, to: "/admin"
+      {:error, chg_set} ->
+        err = chg_set.errors
+        IO.inspect err
+        render conn, "new.html", error: err
+    end
   end
 end
