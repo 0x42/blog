@@ -4,7 +4,6 @@ defmodule Blog.AdminController do
   import Tools
   alias Blog.Post
 
-
   def index(conn, _params) do
     posts = Repo.all Post
     render conn, "index.html", posts: posts
@@ -41,8 +40,16 @@ defmodule Blog.AdminController do
     render conn, "show.html", post: post
   end
   
-  def update(conn, _params) do
-    IO.puts "UPDATE"
+  def update(conn, _params = %{"admin_post" => post_chg, "id" => id}) do
+    try do
+      post = Repo.get!(Post, "asdf")
+      post = Post.changeset(post, post_chg)
+      Repo.update! post
+    rescue
+      e ->
+        err_msg = stringify({"UDPATE ERROR ", e})
+        conn = put_flash(conn, :error, err_msg)
+      end
     redirect conn, to: "/admin"
   end
 end

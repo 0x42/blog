@@ -1,3 +1,12 @@
 <div class="jumbotron">
   <h2>## Last Posts:</h2>
+    <div>
+    <ul>
+      <%= for post <- @posts do %>
+          <li>[<%= post.updated_at %>] <b><%= post.title %>:</b> <%= post.body %>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+
 </div>
