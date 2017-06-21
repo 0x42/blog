@@ -7,11 +7,7 @@ defmodule Blog.PostController do
   plug :scrub_params, "comment" when action in [:add_comment]
   
   def index(conn, _params) do
-    posts = Post
-    |> Post.count_comments
-    |> Repo.all
-    
-    # posts = Repo.all(Post)
+    posts = Repo.all Post
     render(conn, "index.html", posts: posts)
   end
 
@@ -34,9 +30,9 @@ defmodule Blog.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    post = Repo.get(Post, id) |> Repo.preload([:comments])
-    changeset = Comment.changeset(%Comment{})
-    render(conn, "show.html", post: post, changeset: changeset)
+    post = Repo.get(Post, id) #|> Repo.preload([:comments])
+    #changeset = Comment.changeset(%Comment{})
+    render conn, "show.html", post: post #, changeset: changeset)
     # INITIAL CODE
     # post = Repo.get!(Post, id)
     # render(conn, "show.html", post: post)
@@ -74,19 +70,19 @@ defmodule Blog.PostController do
     |> redirect(to: post_path(conn, :index))
   end
 
-  def add_comment(conn, %{"comment" => comment_params, "post_id" => post_id}) do
-    changeset = Comment.changeset(%Comment{}, Map.put(comment_params, "post_id", post_id))
-    post = Post |> Repo.get(post_id) |> Repo.preload([:comments])
+  # def add_comment(conn, %{"comment" => comment_params, "post_id" => post_id}) do
+  #   changeset = Comment.changeset(%Comment{}, Map.put(comment_params, "post_id", post_id))
+  #   post = Post |> Repo.get(post_id) |> Repo.preload([:comments])
 
-    if changeset.valid? do
-      Repo.insert(changeset)
+  #   if changeset.valid? do
+  #     Repo.insert(changeset)
 
-      conn
-      |> put_flash(:info, "Comment added.")
-      |> redirect(to: post_path(conn, :show, post))
-    else
-      render(conn, "show.html", post: post, changeset: changeset)
-    end
-  end
+  #     conn
+  #     |> put_flash(:info, "Comment added.")
+  #     |> redirect(to: post_path(conn, :show, post))
+  #   else
+  #     render(conn, "show.html", post: post, changeset: changeset)
+  #   end
+  #end
 
 end

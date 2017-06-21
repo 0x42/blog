@@ -13,25 +13,31 @@ defmodule Blog.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug BasicAuth, username: "user", password: "secret"
+  end
+
   scope "/", Blog do
     pipe_through :browser # Use the default browser stack
+    # resources "/posts", PostController do
+    #   post "/comment", PostController, :add_comment
+    # end
+    get "/", PageController, :index
+  end
+
+  scope "/admin", Blog do
+    pipe_through [:browser, :auth]
 
     resources "/posts", PostController do
       post "/comment", PostController, :add_comment
     end
 
-    get "/", PageController, :index
-  end
-
-  scope "/admin", Blog do
-    pipe_through :browser
-
-    get    "/",    AdminController, :index
-    get    "/new", AdminController, :new
-    post   "/new", AdminController, :create
-    delete "/:id", AdminController, :delete
-    get    "/:id", AdminController, :show
-    put    "/:id", AdminController, :update
+    get    "/",    PostController, :index
+    # get    "/new", AdminController, :new
+    # post   "/new", AdminController, :create
+    # delete "/:id", AdminController, :delete
+    # get    "/:id", AdminController, :show
+    # put    "/:id", AdminController, :update
   end
 
   # Other scopes may use custom stacks.
