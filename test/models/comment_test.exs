@@ -3,7 +3,7 @@ defmodule Blog.CommentTest do
 
   alias Blog.Comment
 
-  @valid_attrs %{content: "some content", name: "some content"}
+  @valid_attrs %{body: "some content", user_name: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

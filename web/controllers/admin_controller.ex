@@ -5,8 +5,8 @@ defmodule Blog.AdminController do
   alias Blog.Post
 
   def index(conn, _params) do
-    posts = Repo.all Post
-    render conn, "index.html", posts: posts
+    posts = Repo.all(Post) |> Repo.preload([:comments])
+    render conn, "index_admin.html", posts: posts
   end
 
   def new(conn, _params) do

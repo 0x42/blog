@@ -19,10 +19,8 @@ defmodule Blog.Router do
 
   scope "/", Blog do
     pipe_through :browser # Use the default browser stack
-    # resources "/posts", PostController do
-    #   post "/comment", PostController, :add_comment
-    # end
-    get "/", PageController, :index
+    get "/", PostController, :index_share
+    get "/posts/:id", PostController, :show_share
   end
 
   scope "/admin", Blog do
