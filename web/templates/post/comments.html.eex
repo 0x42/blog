@@ -9,8 +9,8 @@
   <tbody>
 <%= for comment <- @post.comments do %>
     <tr>
-      <td><%= comment.name %></td>
-      <td><%= comment.content %></td>
+      <td><%= comment.user_name %></td>
+      <td><%= comment.body %></td>
     </tr>
 <% end %>
   </tbody>

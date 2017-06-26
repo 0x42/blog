@@ -18,9 +18,10 @@ defmodule Blog.Router do
   end
 
   scope "/", Blog do
-    pipe_through :browser # Use the default browser stack
-    get "/", PostController, :index_share
-    get "/posts/:id", PostController, :show_share
+    pipe_through :browser
+    get  "/", PostController, :index_share
+    get  "/posts/:id", PostController, :show_share
+    post "/posts/:post_id/comment", PostController, :add_comment
   end
 
   scope "/admin", Blog do
@@ -31,11 +32,6 @@ defmodule Blog.Router do
     end
 
     get    "/",    PostController, :index
-    # get    "/new", AdminController, :new
-    # post   "/new", AdminController, :create
-    # delete "/:id", AdminController, :delete
-    # get    "/:id", AdminController, :show
-    # put    "/:id", AdminController, :update
   end
 
   # Other scopes may use custom stacks.

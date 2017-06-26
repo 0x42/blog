@@ -18,4 +18,4 @@
 
 <%= render "comments.html", post: @post %>
 <p><b>## Add Comment:</b></p>
-<%= render "comment_form.html", post: @post, changeset: @changeset, action: post_post_path(@conn, :add_comment, @post) %>
+<%= render "comment_form.html", post: @post, changeset: @changeset, action: post_path(@conn, :add_comment, @post) %>
