@@ -5,17 +5,13 @@ defmodule Blog.PostController do
   alias Blog.Post
 
 #  plug :scrub_params, "comment" when action in [:add_comment]
-  
   def index(conn, _params) do
     IO.puts "INDEX RUN:"
     posts = Repo.all(Post) |> Repo.preload([:comments])
-    IO.inspect posts
-    render(conn, "index.html", posts: posts)
-  end
-
-  def index_share(conn, _params) do
-    posts = Repo.all(Post) |> Repo.preload([:comments])
-    render(conn, "index_share.html", posts: posts)
+    auth = BasicAuth.is_auth(conn)
+    IO.puts "auth: "
+    IO.puts auth 
+    render(conn, "index.html", posts: posts, admin: auth)
   end
 
   def new(conn, _params) do

@@ -6,6 +6,7 @@ defmodule BasicAuth do
   end
 
   def call(conn, opts) do
+    IO.inspect conn
     case get_req_header(conn, "authorization") do
       ["Basic "<>auth] ->
         user = Keyword.get(opts, :username)
@@ -14,6 +15,13 @@ defmodule BasicAuth do
         if auth == root_pass, do: conn, else: unauthorized(conn)
       _ ->
         unauthorized(conn)
+    end
+  end
+
+  def is_auth(conn) do
+    case get_req_header(conn, "authorization") do
+      ["Basic " <> _auth] -> :true
+      _ -> :false
     end
   end
 

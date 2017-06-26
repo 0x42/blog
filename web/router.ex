@@ -19,7 +19,7 @@ defmodule Blog.Router do
 
   scope "/", Blog do
     pipe_through :browser
-    get  "/", PostController, :index_share
+    get  "/", PostController, :index
     get  "/posts/:id", PostController, :show_share
     post "/posts/:post_id/comment", PostController, :add_comment
   end
