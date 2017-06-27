@@ -1,7 +1,6 @@
 <h2>Show post</h2>
 
 <ul>
-
   <li>
     <strong>Title:</strong>
     <%= @post.title %>
@@ -11,12 +10,13 @@
     <strong>Body:</strong>
     <%= @post.body %>
   </li>
-
 </ul>
 
-<%#= render "comments.html", post: @post %>
-
-<%= link "Edit", to: post_path(@conn, :edit, @post) %>
 <%= link "Back", to: post_path(@conn, :index) %>
+<br>
+<%= render "comments.html", post: @post %>
+<%= if @admin do %>
+<%= link "Edit", to: post_path(@conn, :edit, @post) %>
+<%= end %>
 
-<%#= render "comment_form.html", post: @post, changeset: @changeset, action: post_post_path(@conn, :add_comment, @post) %>
+<%= render "comment_form.html", post: @post, changeset: @changeset, action: post_post_path(@conn, :add_comment, @post) %>

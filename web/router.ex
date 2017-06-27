@@ -19,19 +19,19 @@ defmodule Blog.Router do
 
   scope "/", Blog do
     pipe_through :browser
+
     get  "/", PostController, :index
-    get  "/posts/:id", PostController, :show_share
+    get  "/posts/:id", PostController, :show
     post "/posts/:post_id/comment", PostController, :add_comment
   end
 
   scope "/admin", Blog do
     pipe_through [:browser, :auth]
 
+    get    "/",    PostController, :index
     resources "/posts", PostController do
       post "/comment", PostController, :add_comment
     end
-
-    get    "/",    PostController, :index
   end
 
   # Other scopes may use custom stacks.

@@ -6,7 +6,7 @@ defmodule Blog.Post do
     field :title, :string
     field :body, :string
 
-    has_many :comments, Blog.Comment
+    has_many :comments, Blog.Comment, on_delete: :delete_all
 
     timestamps()
   end
@@ -18,6 +18,7 @@ defmodule Blog.Post do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:title, :body])
+    |> unique_constraint(:title, name: :posts_unique_field)
     |> validate_required([:title, :body])
   end
 

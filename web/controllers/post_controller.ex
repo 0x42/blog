@@ -6,11 +6,8 @@ defmodule Blog.PostController do
 
 #  plug :scrub_params, "comment" when action in [:add_comment]
   def index(conn, _params) do
-    IO.puts "INDEX RUN:"
     posts = Repo.all(Post) |> Repo.preload([:comments])
     auth = BasicAuth.is_auth(conn)
-    IO.puts "auth: "
-    IO.puts auth 
     render(conn, "index.html", posts: posts, admin: auth)
   end
 
@@ -21,27 +18,29 @@ defmodule Blog.PostController do
 
   def create(conn, %{"post" => post_params}) do
     changeset = Post.changeset(%Post{}, post_params)
-
+    IO.puts "CREATE: "
+    IO.inspect changeset
+    IO.puts "********"
     case Repo.insert(changeset) do
       {:ok, _post} ->
         conn
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: post_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        IO.puts "create Error"
+        err_msg = Tools.stringify changeset.errors
+        conn
+        |> put_flash(:info, "ERROR:" <> err_msg)
+        #|> redirect(to: post_path(conn, :new))
+        |> render("new.html", changeset: changeset)
     end
   end
 
   def show(conn, %{"id" => id}) do
     post = Repo.get(Post, id) |> Repo.preload([:comments])
     changeset = Comment.changeset(%Comment{})
-    render conn, "show.html", post: post , changeset: changeset
-  end
-
-  def show_share(conn, %{"id" => id}) do
-    post = Repo.get(Post, id) |> Repo.preload([:comments])
-    changeset = Comment.changeset(%Comment{})
-    render conn, "show_share.html", post: post, changeset: changeset
+    auth = BasicAuth.is_auth(conn)
+    render conn, "show.html", post: post , changeset: changeset, admin: auth
   end
 
   def edit(conn, %{"id" => id}) do

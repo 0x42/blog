@@ -6,7 +6,6 @@ defmodule BasicAuth do
   end
 
   def call(conn, opts) do
-    IO.inspect conn
     case get_req_header(conn, "authorization") do
       ["Basic "<>auth] ->
         user = Keyword.get(opts, :username)
