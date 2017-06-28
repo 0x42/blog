@@ -4,21 +4,18 @@
       <%= if @admin do %>
       <%= link "Edit", to: post_path(@conn, :edit, @post) %>
       <%= end %>
-      </p>
+    </p>
   </div>
 </section>
 <section class="section">
     <p>
-    <%= @post.title %>
+      <strong>## <%= @post.title %></strong>
     </p>
     <br>
     <p><%= @post.body %></p>
-
-
-<%= link "Back", to: post_path(@conn, :index) %>
+    <%= link "Back", to: post_path(@conn, :index) %>
 </section>
 
-<br>
 <%= render "comments.html", post: @post %>
 
 <%= render "comment_form.html", post: @post, changeset: @changeset, action: post_post_path(@conn, :add_comment, @post) %>

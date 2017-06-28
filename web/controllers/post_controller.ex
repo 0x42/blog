@@ -77,9 +77,9 @@ defmodule Blog.PostController do
       Repo.insert(changeset)
       conn
       |> put_flash(:info, "Comment added.")
-      |> redirect(to: post_path(conn, :show_share, post))
+      |> redirect(to: post_path(conn, :show, post))
     else
-      render(conn, "show_share.html", post: post, changeset: changeset)
+      render(conn, "show.html", post: post, changeset: changeset)
     end
   end
 
