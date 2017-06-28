@@ -18,20 +18,14 @@ defmodule Blog.PostController do
 
   def create(conn, %{"post" => post_params}) do
     changeset = Post.changeset(%Post{}, post_params)
-    IO.puts "CREATE: "
-    IO.inspect changeset
-    IO.puts "********"
-    case Repo.insert(changeset) do
+      case Repo.insert(changeset) do
       {:ok, _post} ->
         conn
         |> put_flash(:info, "Post created successfully.")
         |> redirect(to: post_path(conn, :index))
       {:error, changeset} ->
-        IO.puts "create Error"
-        err_msg = Tools.stringify changeset.errors
+        #err_msg = Tools.stringify changeset.errors
         conn
-        |> put_flash(:info, "ERROR:" <> err_msg)
-        #|> redirect(to: post_path(conn, :new))
         |> render("new.html", changeset: changeset)
     end
   end

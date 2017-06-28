@@ -1,29 +1,51 @@
-<h2>Listing posts</h2>
+<section class="section">
+  <div class="content">
+    <p class="menu-label"># POSTS: 
+      <%= if @admin do %>
+      <%= link "New post", to: post_path(@conn, :new) %>
+      <%= end %>
+      </p>
+  </div>
+</section>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Body</th>
-      <th>Tools</th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for post <- @posts do %>
-    <tr>
-      <td><%= post.title %></td>
-      <td><%= post.body  %></td>
-      <td class="text-right">
-        <%= link  "Show", to: post_path(@conn, :show,  post) %>
-        <%= if @admin do %>
-        <%= link "Edit", to: post_path(@conn, :edit, post) %>
-        <%= link "Delete", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
-        <%= end %>
-      </td>
-    </tr>
+<section class="section">
+
+  <%= for post <- @posts do %>
+<article class="media">
+
+  <%= if @admin do %>
+  <div class="media-left">
+    <small>
+      <%= link "Edit", to: post_path(@conn, :edit, post) %><%= link "Delete", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+    </small>
+  </div>
+  <%= end %>
+  
+  <div class="media-content">
+    <div class="content">
+      <p>
+        <strong><%= post.title %></strong>
+        <br>
+        <%= post.body %>
+      </p>
+    </div>
+    <%= link "Read", to: post_path(@conn, :show,  post) %>
+  
+    <!-- nav class="level is-mobile">
+      <div class="level-left">
+        <a class="level-item">
+          <span class="icon is-small"><i class="fa fa-reply"></i></span>
+        </a>
+        <a class="level-item">
+          <span class="icon is-small"><i class="fa fa-retweet"></i></span>
+        </a>
+        <a class="level-item">
+          <span class="icon is-small"><i class="fa fa-heart"></i></span>
+        </a>
+      </div>
+    </nav-->
+  </div>
+</article>
 <%= end %>
-  </tbody>
-</table>
-<%= if @admin do %>
-<%= link "New post", to: post_path(@conn, :new) %>
-<%= end %>
+
+</section>
