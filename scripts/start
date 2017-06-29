@@ -1,0 +1,15 @@
+#!/bin/bash
+
+DIR_ROOT='apps'
+echo "start blog"
+cd "/$DIR_ROOT/blog/"
+export MIX_ENV=prod
+export PORT=4000
+
+mix compile 
+mix ecto.migrate
+mix phoenix.server
+
+
+
+

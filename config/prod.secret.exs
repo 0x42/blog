@@ -14,7 +14,7 @@ config :blog, Blog.Endpoint,
 # Configure your database
 config :blog, Blog.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "usr_blog",
-  password: "pass_blog",
+  username: "postgres",
+  password: "postgres",
   database: "blog",
   pool_size: 20

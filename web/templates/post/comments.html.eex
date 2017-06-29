@@ -1,9 +1,6 @@
 <section class="section">
   <p class="menu-label"># Comments:</p>
   <%= for comment <- @post.comments do %>
-    <tr>
-      <td><%= comment.user_name %></td>
-      <td><%= comment.body %></td>
-    </tr>
+      <p class="is-small"><strong><%= comment.user_name %>:</strong> <%= comment.body %></p>
   <% end %>
 </section>
