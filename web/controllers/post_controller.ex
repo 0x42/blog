@@ -12,6 +12,9 @@ defmodule Blog.PostController do
   end
 
   def new(conn, _params) do
+    env = System.get_env()
+    IO.puts "ENV:"
+    IO.inspect env
     changeset = Post.changeset(%Post{})
     render(conn, "new.html", changeset: changeset)
   end
