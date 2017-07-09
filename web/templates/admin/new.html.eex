@@ -1,0 +1,16 @@
+<div>
+  <h2>Create New Post:</h2>
+
+  <%= form_for @conn, "/admin/new", [as: :admin_post], fn f -> %>
+    <p>Title: <%= text_input f, :title %></p> <!-- input type="text" name="title"-->
+    <p>Body:  <%= textarea f, :body %></p>    <!-- textarea rows="10" cols="30" name="body"></textarea-->
+    <p><%= submit "create" %></p>                    <!-- input type="submit" value="Create" -->
+  <% end %>
+</div>
+
+<div>
+  <%= if @error != nil do  %>
+  <p>## Errors</p>
+  <p><%= @error %></p>
+  <% end %>
+</div>

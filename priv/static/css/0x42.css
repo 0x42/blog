@@ -1,0 +1,10 @@
+.bo_ul {
+    list-style: none !important;
+}
+.bo_ul li:before {
+    content: "-" !important;
+    position: relative !important;
+    left: -5px !important;
+}
+
+

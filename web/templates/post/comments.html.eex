@@ -1,0 +1,6 @@
+<section class="section">
+  <p class="menu-label"># Comments:</p>
+  <%= for comment <- @post.comments do %>
+      <p class="is-small"><strong><%= comment.user_name %>:</strong> <%= comment.body %></p>
+  <% end %>
+</section>

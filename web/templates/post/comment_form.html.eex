@@ -1,0 +1,31 @@
+
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if f.errors != [] do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below:</p>
+      <ul>
+        <%= for {attr, message} <- f.errors do %>
+          <li><%= humanize(attr) %> <%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="column is-half">
+    <div class="form-group field">
+      <label class="label is-small">Name</label>
+      <%= text_input f, :user_name, class: "form-control input is-small" %>
+    </div>
+
+    <div class="form-group field">
+      <label class="label is-small">Message</label>
+      <%= textarea f, :body, class: "form-control textarea is-small" %>
+    </div>
+
+    <div class="form-group field">
+      <p class="control">
+        <%= submit "Add comment", class: "btn btn-primary button is-primary is-small" %>
+      </p>
+    </div>
+  </div>
+<% end %>
+

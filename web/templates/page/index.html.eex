@@ -1,0 +1,27 @@
+<div class="jumbotron">
+  <h2>## Last Posts:</h2>
+    <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Title</th>
+          <th>Body</th>
+          <th>Tools</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for post <- @posts do %>
+            <tr>
+              <td><%= post.updated_at %></td>
+              <td><%= post.title %></td>
+              <td><%= post.body  %></td>
+              <td class="text-right">
+                <%= link "Show", to: post_path(@conn, :show, post) %>
+              </td>
+            </tr>
+            <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

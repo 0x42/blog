@@ -1,0 +1,15 @@
+#!/bin/bash
+
+HOST='193.124.180.14'
+DIR_ROOT='apps'
+
+APP_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
+
+echo "deploying '$APP_DIR' to '$HOST/$DIR_ROOT/blog'"
+
+rsync -az --delete --exclude=_build --exclude=.git --exclude=.gitignore $APP_DIR/* root@$HOST:/$DIR_ROOT/blog || exit 1
+
+echo "starting server"
+ssh root@$HOST "/$DIR_ROOT/blog/scripts/start > /logs/blog.log 2> /logs/blog.log &"
+
+echo "Successfully deployed."

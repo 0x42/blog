@@ -1,0 +1,11 @@
+<section class="section">
+  <div class="content">
+    <p class="menu-label"># POST[NEW]:</p>
+  </div>
+</section>
+<section class="section">
+  <%= render "form.html", changeset: @changeset,
+                        action: post_path(@conn, :create) %>
+  <br>
+  <%= link "Back", to: post_path(@conn, :index) %>
+</section>
