@@ -13,8 +13,8 @@ defmodule Blog.PostController do
 
   def new(conn, _params) do
     env = System.get_env()
-    IO.puts "ENV:"
-    IO.inspect env
+#    IO.puts "ENV:"
+#    IO.inspect env
     changeset = Post.changeset(%Post{})
     render(conn, "new.html", changeset: changeset)
   end
@@ -36,6 +36,7 @@ defmodule Blog.PostController do
   def show(conn, %{"id" => id}) do
     post = Repo.get(Post, id) |> Repo.preload([:comments])
     changeset = Comment.changeset(%Comment{})
+    #TODO delete is_auth
     auth = BasicAuth.is_auth(conn)
     render conn, "show.html", post: post , changeset: changeset, admin: auth
   end

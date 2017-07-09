@@ -4,32 +4,32 @@
       <%= if @admin do %>
       <%= link "New post", to: post_path(@conn, :new) %>
       <%= end %>
-      </p>
+    </p>
   </div>
 </section>
 
 <section class="section">
 
   <%= for post <- @posts do %>
-<article class="media">
+    <article class="media">
 
-  <%= if @admin do %>
-  <div class="media-left">
-    <small>
-      <%= link "Edit", to: post_path(@conn, :edit, post) %><%= link "Delete", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
-    </small>
-  </div>
-  <%= end %>
+      <%= if @admin do %>
+      <div class="media-left">
+        <small>
+          <%= link "Edit", to: post_path(@conn, :edit, post) %><%= link "Delete", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        </small>
+      </div>
+      <%= end %>
   
-  <div class="media-content">
-    <div class="content">
-      <p>
-        <strong><%= post.title %></strong>
-        <br>
-        <%= post.body %>
-      </p>
-    </div>
-    <%= link "Read", to: post_path(@conn, :show,  post) %>
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <strong><%= post.title %></strong>
+            <br>
+            <%= post.body %>
+          </p>
+        </div>
+        <%= link "Read", to: post_path(@conn, :show,  post) %>
   
     <!-- nav class="level is-mobile">
       <div class="level-left">
@@ -44,7 +44,7 @@
         </a>
       </div>
     </nav-->
-  </div>
+      </div>
 </article>
 <%= end %>
 

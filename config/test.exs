@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :blog, Blog.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+o  password: "postgres",
   database: "blog_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
