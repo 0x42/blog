@@ -1,9 +1,0 @@
-<div>
-  <h2>Edit Current Post:</h2>
-
-  <%#= form_for @conn, admin_path(@conn, :show, @post), [as: :admin_post, method: :put], fn f -> %>
-    <p>Title: <%#= text_input f, :title, value: @post.title %></p>
-    <p>Body:  <%#= textarea f, :body, value: @post.body %></p>
-    <p><%#= submit "update" %></p>
-  <%# end %>
-</div>

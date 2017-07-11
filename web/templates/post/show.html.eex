@@ -1,7 +1,7 @@
 <section class="section">
   <div class="content">
     <p class="menu-label"># POST:
-      <%= if @admin do %>
+      <%= if @conn.assigns[:user?] == :admin do %>
       <%= link "Edit", to: post_path(@conn, :edit, @post) %>
       <%= end %>
     </p>
@@ -18,4 +18,4 @@
 
 <%= render "comments.html", post: @post %>
 
-<%= render "comment_form.html", post: @post, changeset: @changeset, action: post_post_path(@conn, :add_comment, @post) %>
+<%= render "comment_form.html", post: @post, changeset: @changeset, action: post_comment_path(@conn, :add_comment, @post) %>

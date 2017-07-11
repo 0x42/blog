@@ -7,14 +7,11 @@ defmodule Blog.PostController do
 #  plug :scrub_params, "comment" when action in [:add_comment]
   def index(conn, _params) do
     posts = Repo.all(Post) |> Repo.preload([:comments])
-    auth = BasicAuth.is_auth(conn)
-    render(conn, "index.html", posts: posts, admin: auth)
+    render(conn, "index.html", posts: posts)
   end
 
   def new(conn, _params) do
     env = System.get_env()
-#    IO.puts "ENV:"
-#    IO.inspect env
     changeset = Post.changeset(%Post{})
     render(conn, "new.html", changeset: changeset)
   end
@@ -36,9 +33,7 @@ defmodule Blog.PostController do
   def show(conn, %{"id" => id}) do
     post = Repo.get(Post, id) |> Repo.preload([:comments])
     changeset = Comment.changeset(%Comment{})
-    #TODO delete is_auth
-    auth = BasicAuth.is_auth(conn)
-    render conn, "show.html", post: post , changeset: changeset, admin: auth
+    render conn, "show.html", post: post , changeset: changeset
   end
 
   def edit(conn, %{"id" => id}) do
@@ -63,28 +58,19 @@ defmodule Blog.PostController do
 
   def delete(conn, %{"id" => id}) do
     post = Repo.get!(Post, id)
-
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
     Repo.delete!(post)
-
     conn
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: post_path(conn, :index))
   end
 
-  def add_comment(conn, params = %{"comment" => comment, "post_id" => post_id}) do
-    new_comment =  Map.put(comment, "post_id", post_id)
-    changeset = Comment.changeset(%Comment{}, new_comment)
-    post = Post |> Repo.get(post_id) |> Repo.preload([:comments])
-    if changeset.valid? do
-      Repo.insert(changeset)
-      conn
-      |> put_flash(:info, "Comment added.")
-      |> redirect(to: post_path(conn, :show, post))
-    else
-      render(conn, "show.html", post: post, changeset: changeset)
+  def log_in(conn, params) do
+    user = conn.assigns[:user?]
+    case user do
+      :admin -> redirect(conn, to: post_path(conn, :index))
+      _ -> BasicAuth.unauthorized(conn)
     end
   end
-
 end

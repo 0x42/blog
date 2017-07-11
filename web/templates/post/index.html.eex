@@ -1,7 +1,7 @@
 <section class="section">
   <div class="content">
     <p class="menu-label"># POSTS: 
-      <%= if @admin do %>
+      <%= if @conn.assigns[:user?] == :admin do %>
       <%= link "New post", to: post_path(@conn, :new) %>
       <%= end %>
     </p>
@@ -13,7 +13,7 @@
   <%= for post <- @posts do %>
     <article class="media">
 
-      <%= if @admin do %>
+      <%= if @conn.assigns[:user?] == :admin do %>
       <div class="media-left">
         <small>
           <%= link "Edit", to: post_path(@conn, :edit, post) %><%= link "Delete", to: post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>

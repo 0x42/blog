@@ -1,5 +1,7 @@
 defmodule BasicAuth do
+  defstruct users: %{}
   import Plug.Conn
+
 
   def init(opts) do
     opts
@@ -11,9 +13,9 @@ defmodule BasicAuth do
         user = Keyword.get(opts, :username)
         pass = Keyword.get(opts, :password)
         root_pass = Base.encode64(user<>":"<>pass)
-        if auth == root_pass, do: conn, else: unauthorized(conn)
+        if auth == root_pass, do: set_user(conn, :admin), else: set_user(conn, nil)
       _ ->
-        unauthorized(conn)
+        set_user(conn, nil)
     end
   end
 
@@ -24,7 +26,15 @@ defmodule BasicAuth do
     end
   end
 
-  defp unauthorized(conn) do
+  defp set_user(conn, nil) do
+    env = System.get_env("MIX_ENV")
+    if env == "test", do: set_user(conn, :admin), else: assign(conn, :user?, nil)
+  end
+  defp set_user(conn, user) do
+    assign(conn, :user?, user)
+  end
+  
+  def unauthorized(conn) do
     env = System.get_env("MIX_ENV")
     if env == "test" do
       conn
