@@ -7,7 +7,6 @@ defmodule Blog.PostController do
 #  plug :scrub_params, "comment" when action in [:add_comment]
   def index(conn, _params) do
     posts = Repo.all(Post) |> Repo.preload([:comments])
-    IO.puts conn.assigns[:user?]
     render(conn, "index.html", posts: posts)
   end
 
