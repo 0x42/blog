@@ -23,7 +23,7 @@
               </p>
               <ul class="menu-list">
                 <li><a class="menu-label" href="/">home</a></li>
-                <li><a class="menu-label" href="/admin">log in</a></li>
+                <li><a class="menu-label" href="/log_in">log in</a></li>
               </ul>
               <p class="menu-label">
                 ]
